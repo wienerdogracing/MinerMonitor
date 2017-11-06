@@ -18,7 +18,7 @@ Dependencies
 ============
  * PHP enabled web server
  * fsock enabled for PHP
- * You can run a built in PHP server from your PC if you don't want to setup a full server [Instructions](http://php.net/manual/en/features.commandline.webserver.php)
+ * You can run a built in PHP server from your PC instead of a full server
 
 Download
 ========
@@ -38,6 +38,7 @@ Usage instructions
  * Open firewall outgoing port tcp:4048
 
 #### Simple built in php server
+ * [Full Instructions](http://php.net/manual/en/features.commandline.webserver.php)
  * Install PHP for your OS
  * Go to the path where you cloned this repo
  * Run this command `php -S localhost:8000`
