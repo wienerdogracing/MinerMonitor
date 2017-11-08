@@ -8,20 +8,14 @@
 <body>
 
 <script>
-    function loadStats () {
-        $("#page").load("index_monitor.php");
-    }
-
-
     $(function() {
-        var auto_refresh = setTimeout(function run() {
-            loadStats();
-            setTimeout(run, 30000); //default refresh is 30 seconds AFTER last loadstats is done rather than every 30 seconds
+        var auto_refresh;
+        auto_refresh = setTimeout(function loadStats () {
+            $("#page").load("index_monitor.php", function () {setTimeout(loadStats, 30000);});
         },0); //first run is instant
+
+
     });
-
-
-
 
 </script>
 
