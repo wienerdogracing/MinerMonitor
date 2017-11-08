@@ -146,7 +146,6 @@ function displayData($data)
 {
 	global $totalHashRate;
     $htm = '';
-    $totals = '';
 	$totalHashRate = 0;
 	foreach ($data as $name => $stats) {
 		$htm .= '<table id="tb_'.$name.'" class="stats">'."\n";
