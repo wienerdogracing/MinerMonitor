@@ -8,22 +8,28 @@
 <body>
 
 <script>
-$(function() {
-  $("#page").load("index_monitor.php");
-});
+    function loadStats () {
+        $("#page").load("index_monitor.php");
+    }
 
 
-var auto_refresh = setInterval(
-(function () {
-    $("#page").load("index_monitor.php"); //Load the content into the div
-}), 5000); //Number of seconds in microseconds to refresh the stats; 5000 is 5 seconds
+    $(function() {
+        var auto_refresh = setTimeout(function run() {
+            loadStats();
+            setTimeout(run, 30000); //default refresh is 30 seconds AFTER last loadstats is done rather than every 30 seconds
+        },0); //first run is instant
+    });
+
+
+
+
 </script>
 
 <div id="header">
 <h1>Miner Monitor</h1>
 </div>
 
-<div id="page"></div>
+<div id="page">Working...</div>
 
 <div id="footer">
 <p><a href="https://github.com/effectsToCause/veriumMiner">Download veriumMiner</a></p>
