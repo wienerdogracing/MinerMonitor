@@ -5,7 +5,7 @@ $totalHashRate = 0;
 $json = '';
 
 // 3 seconds max.
-set_time_limit(3);
+set_time_limit(10);
 error_reporting(0);
 
 defined('API_HOST') || define('API_HOST', 'localhost');
@@ -13,7 +13,7 @@ defined('API_PORT') || define('API_PORT', 4048);
 
 function getsock($host,$port,$cmd) {
 
-    $timeout = 5;
+    $timeout = 3;
     $socket = @stream_socket_client(
             "tcp://$host:$port",
             $errNo,
@@ -29,7 +29,7 @@ function getsock($host,$port,$cmd) {
     }
     else {
         fwrite($socket, $cmd);
-        stream_set_timeout($socket, 2);
+        stream_set_timeout($socket, 1);
         $data = stream_get_contents($socket);
         $info = stream_get_meta_data($socket);
         fclose($socket);
@@ -172,17 +172,6 @@ function displayData($data)
 	return $totals.$htm;
 }
 
-function displayHashTotal()
-{
-         global $totalHashRate;
-
-         $htm = '';
-         $htm .= ''.$totalHashRate.'';
-         return $htm;
-}
-
 $data = getdataFromPeers();
-$totalHash = displayHashTotal();
-
 ?>
 <?=displayData($data)?>
