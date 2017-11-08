@@ -34,6 +34,8 @@ Usage instructions
 #### On Web Server
  * Download or clone repo
  * Modify minerHosts file with a list of your miners to monitor
+ * Modify minerHosts path in config.ini
+   * By default it will be in the same folder, but you can place it anywhere as long as you correctly set the path
  * Point web server to folder
  * Open firewall outgoing port tcp:4048
 
