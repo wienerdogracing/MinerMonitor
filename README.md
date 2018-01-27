@@ -46,19 +46,6 @@ sudo service lighttpd force-reload
  * Point web server to folder
  * Open firewall outgoing port tcp:4048
 
-#### Simple built in php server
- * [Full Instructions](http://php.net/manual/en/features.commandline.webserver.php)
- * Install PHP for your OS
- * Go to the path where you cloned this repo
- * Run this command `php -S localhost:8000`
-   * Terminal will show:
-```
-PHP Development Server started
-Listening on localhost:8000
-Document root is /var/www/public_html
-Press Ctrl-C to quit
-```
-
 #### Finish
  * Point your browser to your webserver
 
@@ -77,7 +64,8 @@ Donations
 Credits
 =======
 MinerMonitor is based on Birty's original version.
-I fixed code formatting, remade some functions, added useability, etc.
+Derricke fixed code formatting, remade some functions, added useability, etc.
+I added wallet integration for solo mining
 
 License
 =======
