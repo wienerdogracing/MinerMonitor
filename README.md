@@ -36,6 +36,11 @@ Usage instructions
 sudo apt-get install -y lighttpd php7.0-cgi
 sudo lighty-enable-mod fastcgi
 sudo lighty-enable-mod fastcgi-php
+sudo nano /etc/lighttpd/lighttpd.conf
+```
+change = "/var/www/html" to = "/home/pi/MinerMonitor"
+ctrl x and y
+```
 sudo service lighttpd force-reload
 ```
 #### On Web Server
