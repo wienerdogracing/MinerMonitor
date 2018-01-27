@@ -65,7 +65,7 @@ Credits
 =======
 MinerMonitor is based on Birty's original version.
 Derricke fixed code formatting, remade some functions, added useability, etc.
-I added wallet integration for solo mining
+I added wallet integration for solo mining.
 
 License
 =======
