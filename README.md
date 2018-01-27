@@ -22,35 +22,32 @@ Dependencies
 
 Download
 ========
- * Git tree:   https://github.com/derricke/MinerMonitor
- * Clone with `git clone https://github.com/derricke/MinerMonitor.git`
+ * Git tree:   https://github.com/wienerdogracing/MinerMonitor
+ * Clone with `git clone https://github.com/wienerdogracing/MinerMonitor.git`
 
 Usage instructions
 ==================
 #### On miner machines:
  * Run cpuminer with the command line option: `--api-bind 0.0.0.0:4048`
  * Open firewall incoming port tcp:4048
-
+ 
+#### Install Web Server
+```
+sudo apt-get install -y lighttpd php7.0-cgi
+sudo lighty-enable-mod fastcgi
+sudo lighty-enable-mod fastcgi-php
+sudo nano /etc/lighttpd/lighttpd.conf
+```
+change = "/var/www/html" to = "/home/pi/MinerMonitor" or to where ever you cloned the repository to above.
+```
+sudo service lighttpd force-reload
+```
 #### On Web Server
  * Download or clone repo
  * Modify minerHosts file with a list of your miners to monitor
  * Modify minerHosts path in config.ini
    * By default it will be in the same folder, but you can place it anywhere as long as you correctly set the path
- * Point web server to folder
- * Open firewall outgoing port tcp:4048
-
-#### Simple built in php server
- * [Full Instructions](http://php.net/manual/en/features.commandline.webserver.php)
- * Install PHP for your OS
- * Go to the path where you cloned this repo
- * Run this command `php -S localhost:8000`
-   * Terminal will show:
-```
-PHP Development Server started
-Listening on localhost:8000
-Document root is /var/www/public_html
-Press Ctrl-C to quit
-```
+ * Open firewall outgoing port tcp:4048 (not needed on the Pi)
 
 #### Finish
  * Point your browser to your webserver
@@ -70,7 +67,8 @@ Donations
 Credits
 =======
 MinerMonitor is based on Birty's original version.
-I fixed code formatting, remade some functions, added useability, etc.
+Derricke fixed code formatting, remade some functions, added useability, etc.
+I added wallet integration for solo mining.
 
 License
 =======
