@@ -22,8 +22,8 @@ Dependencies
 
 Download
 ========
- * Git tree:   https://github.com/derricke/MinerMonitor
- * Clone with `git clone https://github.com/derricke/MinerMonitor.git`
+ * Git tree:   https://github.com/wienerdogracing/MinerMonitor
+ * Clone with `git clone https://github.com/wienerdogracing/MinerMonitor.git`
 
 Usage instructions
 ==================
@@ -38,7 +38,7 @@ sudo lighty-enable-mod fastcgi
 sudo lighty-enable-mod fastcgi-php
 sudo nano /etc/lighttpd/lighttpd.conf
 ```
-change = "/var/www/html" to = "/home/pi/MinerMonitor"
+change = "/var/www/html" to = "/home/pi/MinerMonitor" or to where ever you cloned the repository to above.
 ```
 sudo service lighttpd force-reload
 ```
@@ -47,8 +47,7 @@ sudo service lighttpd force-reload
  * Modify minerHosts file with a list of your miners to monitor
  * Modify minerHosts path in config.ini
    * By default it will be in the same folder, but you can place it anywhere as long as you correctly set the path
- * Point web server to folder
- * Open firewall outgoing port tcp:4048
+ * Open firewall outgoing port tcp:4048 (not needed on the Pi)
 
 #### Finish
  * Point your browser to your webserver
