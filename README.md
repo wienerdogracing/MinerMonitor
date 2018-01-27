@@ -30,6 +30,12 @@ Usage instructions
 #### On miner machines:
  * Run cpuminer with the command line option: `--api-bind 0.0.0.0:4048`
  * Open firewall incoming port tcp:4048
+ 
+#### Install Web Server
+sudo apt-get install -y lighttpd php7.0-cgi
+sudo lighty-enable-mod fastcgi
+sudo lighty-enable-mod fastcgi-php
+sudo service lighttpd force-reload
 
 #### On Web Server
  * Download or clone repo
