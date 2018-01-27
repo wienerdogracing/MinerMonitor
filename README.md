@@ -32,11 +32,12 @@ Usage instructions
  * Open firewall incoming port tcp:4048
  
 #### Install Web Server
+```
 sudo apt-get install -y lighttpd php7.0-cgi
 sudo lighty-enable-mod fastcgi
 sudo lighty-enable-mod fastcgi-php
 sudo service lighttpd force-reload
-
+```
 #### On Web Server
  * Download or clone repo
  * Modify minerHosts file with a list of your miners to monitor
