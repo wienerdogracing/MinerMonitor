@@ -39,7 +39,6 @@ sudo lighty-enable-mod fastcgi-php
 sudo nano /etc/lighttpd/lighttpd.conf
 ```
 change = "/var/www/html" to = "/home/pi/MinerMonitor"
-ctrl x and y
 ```
 sudo service lighttpd force-reload
 ```
