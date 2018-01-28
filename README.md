@@ -16,7 +16,29 @@ This is a very basic monitor for your miners.
 
 Dependencies
 ============
- * Tested on Raspberry Pi Stretch Lite
+ * Tested on Raspberry Pi Stretch Lite.
+ If you need to setup the Verium wallet on Rasbian Stretch
+ ```
+ sudo apt-get update
+ sudo apt-get upgrade
+ sudo apt-get remove libssl-dev
+ sudo nano /etc/apt/sources.list
+ edit the line below change stretch to jessie
+ deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+ ctrl x then Y to save
+ sudo apt-get update
+ sudo apt-get install libssl-dev
+ sudo apt-mark hold libssl-dev
+ sudo nano /etc/apt/sources.list
+ edit the line below change jessie to stretch
+ deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi
+ ctrl x then Y to save
+
+ wget https://raw.githubusercontent.com/DJoeDt/verium/master/install_Verium_Wallet.sh
+ chmod +x install_Verium_Wallet.sh
+ ./install_Verium_Wallet.sh
+ Verium Wallet install script credit to https://vrm.mining-pool.ovh/
+ ``` 
  * PHP enabled web server
  * fsock enabled for PHP
  * You can run a built in PHP server from your PC instead of a full server
@@ -30,8 +52,12 @@ Usage instructions
 ==================
 #### On miner machines:
  * Run cpuminer with the command line option: `--api-bind 0.0.0.0:4048`
- * Open firewall incoming port tcp:4048 (not needed on the Raspberry Pi)
- 
+ * Open firewall incoming port tcp:4048 (might not be needed)
+ * For Odroids it is suggested to run Fireworm's latest version for correct CPU frequency and Temperature reporting
+ * For Odroids soloing or make adjustments for the stratum pool
+ ```
+ ./cpuminer -o walletIP:33987 -O walletuser:walletpassword -t 2 -1 6 --cpu-affinity-stride 1 --cpu-affinity-default-index 6 --cpu-affinity-oneway-index 0 --api-bind 0.0.0.0:4048
+ ```
 #### Install Web Server
 ```
 sudo apt-get install -y lighttpd php7.0-cgi
