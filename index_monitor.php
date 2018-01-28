@@ -80,12 +80,17 @@ function getdataFromPeers()
 	return $data;
 }
 
-function ignoreField($key)
+function ignoreField($key,$solo)
 {
-	#$ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TEMP','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
-	$ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
-	return in_array($key, $ignored);
+    if($solo == TRUE){
+	     $ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
+    }
+    else{
+         $ignored = array('NAME','VER','ALGO','GPUS','ACC','ACCMN','CPU','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
+    }
+    return in_array($key, $ignored);
 }
+
 
 function translateField($key)
 {
@@ -154,7 +159,7 @@ function displayData($data,$config_array)
 		$htm .= '<tr><th class="machine" colspan="2">'.$name."</th></tr>\n";
         $summary = (array) $stats['summary'];
         foreach ($summary as $key=>$val) {
-            if (!ignoreField($key)) {
+            if (!ignoreField($key,$config_array['solo'])) {
                 if ($key == 'error') {
                     $htm .= '<tr><td class="val" colspan="2">' . translateValue($key, $val, $summary) . "</td></tr>\n";
                 } else {
