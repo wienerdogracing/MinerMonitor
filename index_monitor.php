@@ -1,5 +1,6 @@
 <?php
 require_once 'getConfig.php';
+require_once 'jsonRPCClient.php';
 
 $totalHashRate = 0;
 $json = '';
@@ -52,7 +53,7 @@ function strToArray($sockData) {
 	{
 		$id = explode('=', $item);
 		$data[$id[0]] = $id[1];
-		if($id[0] == 'KHS') $data['KHM'] = $id[1]*60; //cpuminer returns KHS so we add KHM as a data point for those interested
+		if($id[0] == 'KHS') $data['HM'] = $id[1]*60*1000; //cpuminer returns KHS so we add Hash/min for low hash devices. Need Fireworms latest to take advantage
 	}
 		
 	return $data;
@@ -81,7 +82,8 @@ function getdataFromPeers()
 
 function ignoreField($key)
 {
-	$ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TEMP','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
+	#$ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TEMP','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
+	$ignored = array('NAME','VER','ALGO','GPUS','SOLV','ACCMN','CPU','TS','API','GPU','CARD','FAN','REJ','DIFF','UPTIME');
 	return in_array($key, $ignored);
 }
 
@@ -91,13 +93,13 @@ function translateField($key)
 	$intl['NAME'] = 'Software';
 	$intl['VER'] = 'Version';
 	$intl['KHS'] = 'KH/S';
-	$intl['KHM'] = 'KH/M';
+	$intl['HM'] = 'H/M';
 
 	$intl['ALGO'] = 'Algorithm';
 	$intl['GPUS'] = 'GPUs';
 	$intl['CPUS'] = 'Threads';
 	$intl['H/m'] = 'Hash rate (H/m)';
-	$intl['SOLV'] = 'Found blocks';
+	$intl['SOLV'] = 'Shares Accepted';
 	$intl['ACC'] = 'Blocks found';
 	$intl['ACCMN'] = 'Accepted / mn';
 	$intl['REJ'] = 'Rejected';
@@ -142,7 +144,7 @@ function translateValue($key,$val,$data=array())
 	return $val;
 }
 
-function displayData($data)
+function displayData($data,$config_array)
 {
 	global $totalHashRate;
     $htm = '';
@@ -166,12 +168,41 @@ function displayData($data)
         }
         $htm .= "</table>\n";
 	}
-	// totals
+	
+    // totals for solo then pool
 
-    $totals = '<div class="totals"><h2>Totals:<br />KH/S: '.$totalHashRate.'<br />KH/M: '.($totalHashRate*60).'</h2></div>'."\n";
-	return $totals.$htm;
+    if ($config_array['solo'] == TRUE) {
+            $url = 'http://'.$config_array['walletuser'].':'.$config_array['walletpassword'].'@'.$config_array['walletaddress'].':33987';
+            $verium = new jsonRPCClient($url);
+        
+            $balance = $verium->getbalance();
+            $mininginfo = $verium->getmininginfo();
+
+            $blocktime=(-13.03*log($mininginfo['difficulty'])+180)/60;
+            $blocks_hr=60.0/$blocktime;
+            $network_vrm=$blocks_hr*$mininginfo['blockreward (VRM)'];
+            $vrm_day=$network_vrm*($totalHashRate*60)/$mininginfo['nethashrate (kH/m)']*24;
+        
+            $totals = '<table cellpadding="10"><tr><td>Total kH/M: '.number_format($totalHashRate*60,3).'</td>
+              <td>KH/S: '.number_format($totalHashRate,4).'</td>
+              <td>Network kH/M: '.number_format($mininginfo['nethashrate (kH/m)'],0).'</td>
+              <td>Blocks/hr '.number_format($blocks_hr,2).'</td></tr>
+           <tr><td>VRM Balance: '.number_format($balance,2).'</td>
+              <td>Block: '.$mininginfo['blocks'].'</td>
+              <td>Block Rewared: '.number_format($mininginfo['blockreward (VRM)'],2).'</td>
+              <td>VRM/day : '.number_format($vrm_day,2).'</td></tr>
+           </table>'."\n";
+            
+        
+    } else {
+        $totals = '<div class="totals"><h2>Totals:'.$ini['solo'].'<br />KH/S: '.$totalHashRate.'<br />KH/M: '.($totalHashRate*60).'</h2></div>'."\n";
+	    
+        
+    }
+    
+    return $totals.$htm;
 }
 
 $data = getdataFromPeers();
 ?>
-<?=displayData($data)?>
+<?=displayData($data,$ini_array['CONFIG'])?>
