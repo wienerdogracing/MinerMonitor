@@ -140,7 +140,7 @@ function translateValue($key,$val,$data=array())
 			$val = $data['NAME'].'�&nbsp;'.$data['VER'];
 			break;
 		case 'FREQ':
-                        $val = sprintf("%.2fGHz", floatval($val)/1000000);
+                        $val = sprintf("%.1fGHz", floatval($val)/1000000);
 			break;
 		case 'TS':
 			$val = strftime("%H:%M:%S", (int) $val);
@@ -183,19 +183,19 @@ function displayData($data,$config_array)
             $balance = $verium->getbalance();
             $mininginfo = $verium->getmininginfo();
 
-            $blocktime=(-13.03*log($mininginfo['difficulty'])+180)/60;
-            $blocks_hr=60.0/$blocktime;
+            #$blocktime=(-13.03*log($mininginfo['difficulty'])+180)/60;
+            $blocks_hr=60.0/$mininginfo['blocktime (min)'];
             $network_vrm=$blocks_hr*$mininginfo['blockreward (VRM)'];
             $vrm_day=$network_vrm*($totalHashRate*60)/$mininginfo['nethashrate (kH/m)']*24;
         
-            $totals = '<table cellpadding="10"><tr><td>Total kH/M: '.number_format($totalHashRate*60,3).'</td>
-              <td>KH/S: '.number_format($totalHashRate,4).'</td>
-              <td>Network kH/M: '.number_format($mininginfo['nethashrate (kH/m)'],0).'</td>
-              <td>Blocks/hr '.number_format($blocks_hr,2).'</td></tr>
-           <tr><td>VRM Balance: '.number_format($balance,2).'</td>
-              <td>Block: '.$mininginfo['blocks'].'</td>
-              <td>Block Rewared: '.number_format($mininginfo['blockreward (VRM)'],2).'</td>
-              <td>VRM/day : '.number_format($vrm_day,2).'</td></tr>
+            $totals = '<table class="totals"><tr><td class="totals">Total kH/M: '.number_format($totalHashRate*60,3).'</td>
+              <td class="totals">KH/S: '.number_format($totalHashRate,4).'</td>
+              <td class="totals">Network kH/M: '.number_format($mininginfo['nethashrate (kH/m)'],0).'</td>
+              <td class="totals">Blocks/hr: '.number_format($blocks_hr,2).'</td></tr>
+           <tr><td class="totals">VRM Balance: '.number_format($balance,2).'</td>
+              <td class="totals">Block: '.$mininginfo['blocks'].'</td>
+              <td class="totals">Block Rewared: '.number_format($mininginfo['blockreward (VRM)'],2).'</td>
+              <td class="totals">VRM/day: '.number_format($vrm_day,2).'</td></tr>
            </table>'."\n";
             
         
