@@ -7,6 +7,7 @@ This is a very basic monitor for your miners.
 #### Table of contents
 
 * [Dependencies](#dependencies)
+* [Docker](#docker)
 * [Download](#download)
 * [Usage instructions](#usage-instructions)
 * [TODOS](#todos)
@@ -42,6 +43,31 @@ Dependencies
  * PHP enabled web server
  * fsock enabled for PHP
  * You can run a built in PHP server from your PC instead of a full server
+
+Docker
+======
+ Edit the config.ini and minerHosts files
+ ```
+ # config.ini
+ walletuser = YourSoloMiningName
+ walletpassword = YourSoloMiningPassword
+ walletaddress = 127.0.0.1
+
+ # minerHosts
+ 1.2.3.4
+ 1.2.3.5
+ 1.2.3.6
+ ```
+
+ Build the image
+ ```
+ docker build -t minermonitor .
+ ```
+ 
+ Run the container
+ ```
+ docker run -d --net=host --name minermonitor minermonitor
+ ```
 
 Download
 ========
