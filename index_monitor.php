@@ -151,9 +151,10 @@ function translateValue($key,$val,$data=array())
 
 function displayData($data,$config_array)
 {
-	global $totalHashRate;
+    global $totalHashRate, $totalBlocksFound;
     $htm = '';
 	$totalHashRate = 0;
+	$totalBlocksFound = 0;
 	foreach ($data as $name => $stats) {
 		$htm .= '<table id="tb_'.$name.'" class="stats">'."\n";
 		$htm .= '<tr><th class="machine" colspan="2">'.$name."</th></tr>\n";
@@ -167,7 +168,9 @@ function displayData($data,$config_array)
                         '<td class="val">' . translateValue($key, $val, $summary) . "</td></tr>\n";
                     if ($key == 'KHS') {
                         $totalHashRate += $val;
-                    }
+                    } elseif ($key == 'ACC') {
+			$totalBlocksFound += $val;
+		    }
                 }
             }
         }
@@ -191,11 +194,13 @@ function displayData($data,$config_array)
             $totals = '<table class="totals"><tr><td class="totals">Total kH/M: '.number_format($totalHashRate*60,3).'</td>
               <td class="totals">KH/S: '.number_format($totalHashRate,4).'</td>
               <td class="totals">Network kH/M: '.number_format($mininginfo['nethashrate (kH/m)'],0).'</td>
-              <td class="totals">Blocks/hr: '.number_format($blocks_hr,2).'</td></tr>
+              <td class="totals">Blocks/hr: '.number_format($blocks_hr,2).'</td>
+	      <td class="totals">Difficulty : '.number_format($mininginfo['difficulty'],4).'</td> </tr>
            <tr><td class="totals">VRM Balance: '.number_format($balance,2).'</td>
               <td class="totals">Block: '.$mininginfo['blocks'].'</td>
               <td class="totals">Block Rewared: '.number_format($mininginfo['blockreward (VRM)'],2).'</td>
-              <td class="totals">VRM/day: '.number_format($vrm_day,2).'</td></tr>
+              <td class="totals">VRM/day: '.number_format($vrm_day,2).'</td>
+	      <td class="totals">Blocks Found: '.$totalBlocksFound.'</td></tr>
            </table>'."\n";
             
         
